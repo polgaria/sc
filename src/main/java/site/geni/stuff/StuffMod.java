@@ -1,8 +1,7 @@
 package site.geni.stuff;
 
 import net.fabricmc.api.EnvType;
-import net.fabricmc.loader.EnvironmentHandler;
-import net.fabricmc.loader.FabricLoader;
+import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.commands.CommandRegistry;
 import site.geni.stuff.commands.DayNightCommand;
@@ -20,8 +19,8 @@ public class StuffMod implements ModInitializer {
 		final boolean dedicated;
 
 		/* check if running in client or dedicated server */
-		EnvironmentHandler envHandler = FabricLoader.INSTANCE.getEnvironmentHandler();
-		if (envHandler.getEnvironmentType() == EnvType.CLIENT) {
+		EnvType env = FabricLoader.getInstance().getEnvironmentType();
+		if (env == EnvType.CLIENT) {
 			dedicated = false;
 		} else {
 			dedicated = true;
