@@ -1,5 +1,8 @@
 package site.geni.stuff;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.loader.EnvironmentHandler;
+import net.fabricmc.loader.FabricLoader;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.commands.CommandRegistry;
 import site.geni.stuff.commands.DayNightCommand;
@@ -12,13 +15,24 @@ public class StuffMod implements ModInitializer {
 		regCommands();
 	}
 
+	/* registers commands */
 	private static void regCommands() {
-		CommandRegistry.INSTANCE.register(true, TpDimCommand::onCommand);
-		CommandRegistry.INSTANCE.register(true, DayNightCommand::onCycleCommand);
-		CommandRegistry.INSTANCE.register(true, DayNightCommand::onDayCommand);
-		CommandRegistry.INSTANCE.register(true, DayNightCommand::onNightCommand);
-		CommandRegistry.INSTANCE.register(true, WeatherCommand::onRainCommand);
-		CommandRegistry.INSTANCE.register(true, WeatherCommand::onThunderCommand);
+		final boolean dedicated;
+
+		/* check if running in client or dedicated server */
+		EnvironmentHandler envHandler = FabricLoader.INSTANCE.getEnvironmentHandler();
+		if (envHandler.getEnvironmentType() == EnvType.CLIENT) {
+			dedicated = false;
+		} else {
+			dedicated = true;
+		}
+
+		CommandRegistry.INSTANCE.register(dedicated, DayNightCommand::onCycleCommand);
+		CommandRegistry.INSTANCE.register(dedicated, DayNightCommand::onDayCommand);
+		CommandRegistry.INSTANCE.register(dedicated, DayNightCommand::onNightCommand);
+		CommandRegistry.INSTANCE.register(dedicated, TpDimCommand::onCommand);
+		CommandRegistry.INSTANCE.register(dedicated, WeatherCommand::onRainCommand);
+		CommandRegistry.INSTANCE.register(dedicated, WeatherCommand::onThunderCommand);
 
 	}
 }

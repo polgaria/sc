@@ -13,7 +13,10 @@ public class DayNightCommand {
 	private final static TextComponent nightMessage = new StringTextComponent("Time set to night. (13000)").getTextComponent().applyFormat(TextFormat.YELLOW);
 
 	public static void onCycleCommand(CommandDispatcher<ServerCommandSource> dispatcher) {
-		dispatcher.register(ServerCommandManager.literal("cycle").requires(source -> source.hasPermissionLevel(1)).executes(context -> {
+		dispatcher.register(
+				ServerCommandManager.literal("cycle").requires(
+				source -> source.hasPermissionLevel(1)
+		).executes(context -> {
 			ServerPlayerEntity player = context.getSource().getPlayer();
 			long time = player.world.getTimeOfDay();
 
@@ -29,9 +32,11 @@ public class DayNightCommand {
 	}
 
 	public static void onDayCommand(CommandDispatcher<ServerCommandSource> dispatcher) {
-		dispatcher.register(ServerCommandManager.literal("day").requires(source -> source.hasPermissionLevel(1)).executes(context -> {
+		dispatcher.register(
+				ServerCommandManager.literal("day").requires(
+				source -> source.hasPermissionLevel(1)
+		).executes(context -> {
 			ServerPlayerEntity player = context.getSource().getPlayer();
-			long time = player.world.getTimeOfDay();
 
 			player.world.setTimeOfDay(0);
 			context.getSource().sendFeedback(dayMessage, false);
@@ -41,9 +46,11 @@ public class DayNightCommand {
 	}
 
 	public static void onNightCommand(CommandDispatcher<ServerCommandSource> dispatcher) {
-		dispatcher.register(ServerCommandManager.literal("night").requires(source -> source.hasPermissionLevel(1)).executes(context -> {
+		dispatcher.register(
+				ServerCommandManager.literal("night").requires(
+				source -> source.hasPermissionLevel(1)
+		).executes(context -> {
 			ServerPlayerEntity player = context.getSource().getPlayer();
-			long time = player.world.getTimeOfDay();
 
 			player.world.setTimeOfDay(13000);
 			context.getSource().sendFeedback(nightMessage, false);

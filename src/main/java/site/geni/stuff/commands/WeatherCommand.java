@@ -19,7 +19,10 @@ public class WeatherCommand {
 	private final static TextComponent stopThunderMessage = new StringTextComponent("Thunder stopped.").getTextComponent().applyFormat(TextFormat.YELLOW);
 
 	public static void onRainCommand(CommandDispatcher<ServerCommandSource> dispatcher) {
-		dispatcher.register(ServerCommandManager.literal("rain").requires(source -> source.hasPermissionLevel(1)).executes(context -> {
+		dispatcher.register(
+				ServerCommandManager.literal("rain").requires(
+				source -> source.hasPermissionLevel(1)
+		).executes(context -> {
 			ServerPlayerEntity player = context.getSource().getPlayer();
 			if (setRaining(player.getServerWorld())) {
 				player.server.getPlayerManager().sendToAll(startRainMessage);
@@ -31,7 +34,10 @@ public class WeatherCommand {
 	}
 
 	public static void onThunderCommand(CommandDispatcher<ServerCommandSource> dispatcher) {
-		dispatcher.register(ServerCommandManager.literal("thunder").requires(source -> source.hasPermissionLevel(1)).executes(context -> {
+		dispatcher.register(
+				ServerCommandManager.literal("thunder").requires(
+				source -> source.hasPermissionLevel(1)
+		).executes(context -> {
 			ServerPlayerEntity player = context.getSource().getPlayer();
 			if (setThundering(player.getServerWorld())) {
 				player.server.getPlayerManager().sendToAll(startThunderMessage);
