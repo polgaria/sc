@@ -1,6 +1,6 @@
 {
   "required": true,
-  "package": "site.geni.stuff.mixin",
+  "package": "site.geni.stuff.mixins",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
   ],
