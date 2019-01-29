@@ -3,6 +3,8 @@
   "package": "site.geni.stuff.mixins",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
+    "OnJoinMixin",
+    "OnDisconnectMixin"
   ],
   "injectors": {
     "defaultRequire": 1

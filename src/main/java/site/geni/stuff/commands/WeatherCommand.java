@@ -9,18 +9,17 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.StringTextComponent;
 import net.minecraft.text.TextComponent;
-import net.minecraft.text.TextFormat;
 import net.minecraft.world.level.LevelProperties;
 
 public class WeatherCommand {
-	private final static TextComponent startRainMessage = new StringTextComponent("Rain started.").getTextComponent().applyFormat(TextFormat.YELLOW);
-	private final static TextComponent stopRainMessage = new StringTextComponent("Rain stopped.").getTextComponent().applyFormat(TextFormat.YELLOW);
+	private final static TextComponent startRainMessage = new StringTextComponent("\u00a76Rain started.");
+	private final static TextComponent stopRainMessage = new StringTextComponent("\u00a76Rain stopped.");
 
-	private final static TextComponent startThunderMessage = new StringTextComponent("Thunder started.").getTextComponent().applyFormat(TextFormat.YELLOW);
-	private final static TextComponent stopThunderMessage = new StringTextComponent("Thunder stopped.").getTextComponent().applyFormat(TextFormat.YELLOW);
+	private final static TextComponent startThunderMessage = new StringTextComponent("\u00a76Thunder started.");
+	private final static TextComponent stopThunderMessage = new StringTextComponent("\u00a76Thunder stopped.");
 
 	public static void register() {
-		/* rain command */
+		/* register rain command */
 		ServerEvent.START.register(
 				server -> server.getCommandManager().getDispatcher().register(
 						ServerCommandManager.literal("rain").executes(
@@ -29,7 +28,7 @@ public class WeatherCommand {
 				)
 		);
 
-		/* thunder command */
+		/* register thunder command */
 		ServerEvent.START.register(
 				server -> server.getCommandManager().getDispatcher().register(
 						ServerCommandManager.literal("thunder").executes(

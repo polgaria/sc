@@ -11,11 +11,11 @@ import net.minecraft.text.TextComponent;
 import net.minecraft.text.TextFormat;
 
 public class DayNightCommand {
-	private final static TextComponent dayMessage = new StringTextComponent("Time set to day. (0)").getTextComponent().applyFormat(TextFormat.YELLOW);
-	private final static TextComponent nightMessage = new StringTextComponent("Time set to night. (13000)").getTextComponent().applyFormat(TextFormat.YELLOW);
+	private final static TextComponent dayMessage = new StringTextComponent("\u00a76Time set to day. (0)");
+	private final static TextComponent nightMessage = new StringTextComponent("\u00a76Time set to night. (13000)").applyFormat(TextFormat.YELLOW);
 
 	public static void register() {
-		/* cycle command */
+		/* register cycle command */
 		ServerEvent.START.register(
 				server -> server.getCommandManager().getDispatcher().register(
 						ServerCommandManager.literal("cycle").executes(
@@ -24,7 +24,7 @@ public class DayNightCommand {
 				)
 		);
 
-		/* day command */
+		/* register day command */
 		ServerEvent.START.register(
 				server -> server.getCommandManager().getDispatcher().register(
 						ServerCommandManager.literal("day").executes(
@@ -33,7 +33,7 @@ public class DayNightCommand {
 				)
 		);
 
-		/* night command */
+		/* register night command */
 		ServerEvent.START.register(
 				server -> server.getCommandManager().getDispatcher().register(
 						ServerCommandManager.literal("night").executes(

@@ -1,17 +1,28 @@
 {
   "id": "stuff",
-  "name": "test mod",
-  "description": "sonic",
-  "version": "1.0.0",
+  "name": "stuff",
+  "description": "commands for dedicated servers",
+  "version": "0.0.1",
   "side": "universal",
   "initializers": [
     "site.geni.stuff.StuffMod"
   ],
+  "authors": [
+    {
+      "name": "geni",
+      "website": "https://geni.site",
+      "email": "me@geni.site"
+    }
+  ],
+  "links": {
+    "homepage": "https://polgarian.life",
+    "issues": "https://github.com/geniiii/polgarian.life/issues",
+    "sources": "https://github.com/geniiii/polgarian.life"
+  },
   "requires": {
+    "fabric": "*"
   },
   "mixins": {
-    "client": "stuff.client.json",
-    "common": "stuff.common.json",
-    "server": "stuff.server.json"
+    "server": "stuff.mixins.server.json"
   }
 }
