@@ -1,10 +1,7 @@
 package site.geni.stuff;
 
 import net.fabricmc.api.ModInitializer;
-import site.geni.stuff.commands.TpDimCommand;
-import site.geni.stuff.commands.DayNightCommand;
-import site.geni.stuff.commands.TpaCommand;
-import site.geni.stuff.commands.WeatherCommand;
+import site.geni.stuff.commands.*;
 
 @SuppressWarnings("unused")
 public class StuffMod implements ModInitializer {
@@ -19,5 +16,6 @@ public class StuffMod implements ModInitializer {
 		DayNightCommand.register();
 		WeatherCommand.register();
 		TpaCommand.register();
+		ListCommand.register();
 	}
 }
