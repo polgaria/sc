@@ -12,7 +12,7 @@ import net.minecraft.text.TextFormat;
 
 public class DayNightCommand {
 	private final static TextComponent dayMessage = new StringTextComponent("\u00a76Time set to day. (0)");
-	private final static TextComponent nightMessage = new StringTextComponent("\u00a76Time set to night. (13000)").applyFormat(TextFormat.YELLOW);
+	private final static TextComponent nightMessage = new StringTextComponent("\u00a76Time set to night. (13000)");
 
 	public static void register() {
 		/* register cycle command */
