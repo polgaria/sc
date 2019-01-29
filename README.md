@@ -1,3 +1,2 @@
-# polgarian.life mod
-mod to be used for the polgarian.life server  
-*(not functional on dedicated servers yet)*
+# stuff
+mod used on the `polgarian.life` server
