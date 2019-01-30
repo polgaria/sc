@@ -23,6 +23,7 @@
     "fabric": "*"
   },
   "mixins": {
-    "server": "stuff.mixins.server.json"
+    "server": "stuff.server.json",
+    "common": "stuff.common.json"
   }
 }

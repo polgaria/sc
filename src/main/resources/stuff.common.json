@@ -1,0 +1,14 @@
+{
+  "required": true,
+  "package": "site.geni.stuff.mixins",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+    "ListCommandVanillaMixin",
+    "SeedCommandVanillaMixin",
+    "TimeCommandVanillaMixin"
+  ],
+  "minVersion": "",
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
