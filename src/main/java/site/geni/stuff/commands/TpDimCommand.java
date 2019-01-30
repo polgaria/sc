@@ -47,6 +47,6 @@ public class TpDimCommand {
 			final TextComponent alreadyInDimMessage = new StringTextComponent(String.format("You are already in %s!", dimensionType.toString()));
 			throw new CommandException(alreadyInDimMessage);
 		} else
-			throw new CommandException(new StringTextComponent("Unknown error."));
+			throw new CommandException(new StringTextComponent("Unexpected error."));
 	}
 }

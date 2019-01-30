@@ -2,7 +2,7 @@
   "id": "stuff",
   "name": "stuff",
   "description": "commands for dedicated servers",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "side": "universal",
   "initializers": [
     "site.geni.stuff.StuffMod"

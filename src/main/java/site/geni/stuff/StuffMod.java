@@ -19,5 +19,6 @@ public class StuffMod implements ModInitializer {
 		TpDimCommand.register();
 		WeatherCommand.register();
 		TimeCommand.register();
+		iCommand.register();
 	}
 }

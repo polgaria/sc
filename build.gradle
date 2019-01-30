@@ -6,14 +6,14 @@ sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 archivesBaseName = "stuff"
-version = "1.0.0"
+version = "0.1.0"
 
 minecraft {
 }
 
 dependencies {
 	minecraft "com.mojang:minecraft:19w04b"
-	mappings "net.fabricmc:yarn:19w04b.3"
+	mappings "net.fabricmc:yarn:19w04b.5"
 	modCompile "net.fabricmc:fabric-loader:0.3.4.104"
 
 	// Fabric API. This is technically optional, but you probably want it anyway.
