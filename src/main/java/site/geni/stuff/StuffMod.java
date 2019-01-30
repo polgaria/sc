@@ -12,10 +12,12 @@ public class StuffMod implements ModInitializer {
 
 	/* registers commands */
 	private static void regCommands() {
-		TpDimCommand.register();
 		DayNightCommand.register();
-		WeatherCommand.register();
-		TpaCommand.register();
 		ListCommand.register();
+		SeedCommand.register();
+		TpaCommand.register();
+		TpDimCommand.register();
+		WeatherCommand.register();
+		TimeCommand.register();
 	}
 }

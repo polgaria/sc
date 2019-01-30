@@ -31,12 +31,12 @@ public class TpDimCommand {
 		);
 	}
 
-	public static int onCommand(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
-		ServerPlayerEntity player = context.getSource().getPlayer();
-		DimensionType dimensionType = DimensionArgumentType.getDimensionArgument(context, "dimension");
+	private static int onCommand(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
+		final ServerPlayerEntity player = context.getSource().getPlayer();
+		final DimensionType dimensionType = DimensionArgumentType.getDimensionArgument(context, "dimension");
 
 		if (dimensionType != null && dimensionType != player.dimension) {
-			TextComponent tpMessage = new StringTextComponent("Teleporting to " + dimensionType.toString() + "...").applyFormat(TextFormat.YELLOW);
+			final TextComponent tpMessage = new StringTextComponent(String.format("\u00a76Teleporting to %s...", dimensionType.toString()));
 			context.getSource().sendFeedback(tpMessage, false);
 
 			player.setInPortal(player.getPos());
@@ -44,7 +44,7 @@ public class TpDimCommand {
 
 			return 1;
 		} else if (dimensionType == player.dimension) {
-			TextComponent alreadyInDimMessage = new StringTextComponent("You are already in " + dimensionType.toString() + "!");
+			final TextComponent alreadyInDimMessage = new StringTextComponent(String.format("You are already in %s!", dimensionType.toString()));
 			throw new CommandException(alreadyInDimMessage);
 		} else
 			throw new CommandException(new StringTextComponent("Unknown error."));

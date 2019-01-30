@@ -52,9 +52,9 @@ public class TpaCommand {
 		);
 	}
 
-	public static int onTpaCommand(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
-		ServerPlayerEntity originPlayer = context.getSource().getPlayer();
-		ServerPlayerEntity destPlayer = EntityArgumentType.method_9315(context, "player");
+	private static int onTpaCommand(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
+		final ServerPlayerEntity originPlayer = context.getSource().getPlayer();
+		final ServerPlayerEntity destPlayer = EntityArgumentType.method_9315(context, "player");
 
 		if (tp.containsKey(destPlayer.getUuid())) {
 			throw new CommandException(new StringTextComponent("This player already has a pending TPA request!"));
@@ -70,11 +70,14 @@ public class TpaCommand {
 		}
 
 		/* send message confirming to origin player that the request has been sent */
-		context.getSource().sendFeedback(new TranslatableTextComponent(String.format("\u00a76TPA request to \u00a74%s\u00a76 sent.", destPlayer.getDisplayName().getText())), false);
+		final TextComponent sentTpaRequest = new StringTextComponent(String.format("\u00a76TPA request to \u00a74%s\u00a76 sent.", destPlayer.getDisplayName().getText()));
+		context.getSource().sendFeedback(sentTpaRequest, false);
 
 		/* send message to destination player alerting them of the TPA request */
-		destPlayer.addChatMessage(new TranslatableTextComponent(String.format("\u00a74%s \u00a76has sent you a TPA request! \u00a76Accept with \u00a72/tpaccept\u00a76 or deny with \u00a72/tpdeny\u00a76.", originPlayer.getDisplayName().getText())), false);
-		destPlayer.addChatMessage(new StringTextComponent("\u00a76You have 30 seconds to respond until the TPA request \u00a76expires."), false);
+		final TextComponent receivedTpaRequest = new StringTextComponent(String.format("\u00a74%s \u00a76has sent you a TPA request! \u00a76Accept with \u00a72/tpaccept\u00a76 or deny with \u00a72/tpdeny\u00a76.", originPlayer.getDisplayName().getText()));
+		final TextComponent tpaRequestExpiresIn = new StringTextComponent("\u00a76You have 30 seconds to respond until the TPA request \u00a76expires.");
+		destPlayer.addChatMessage(receivedTpaRequest, false);
+		destPlayer.addChatMessage(tpaRequestExpiresIn, false);
 
 		/* schedule a timer for 30 seconds */
 		new java.util.Timer().schedule(
@@ -86,8 +89,8 @@ public class TpaCommand {
 							tp.remove(destPlayer.getUuid());
 
 							/* send messages to both players alerting them that the TPA request has expired */
-							TextComponent requestExpiredFromMessage = new StringTextComponent(String.format("\u00a7cTPA request from \u00a74%s\u00a7c expired.", originPlayer.getDisplayName().getText()));
-							TextComponent requestExpiredToMessage = new StringTextComponent(String.format("\u00a7cTPA request to \u00a74%s\u00a7c expired.", destPlayer.getDisplayName().getText()));
+							final TextComponent requestExpiredFromMessage = new StringTextComponent(String.format("\u00a7cTPA request from \u00a74%s\u00a7c expired.", originPlayer.getDisplayName().getText()));
+							final TextComponent requestExpiredToMessage = new StringTextComponent(String.format("\u00a7cTPA request to \u00a74%s\u00a7c expired.", destPlayer.getDisplayName().getText()));
 
 							context.getSource().sendFeedback(requestExpiredToMessage, false);
 							destPlayer.addChatMessage(requestExpiredFromMessage, false);
@@ -100,10 +103,10 @@ public class TpaCommand {
 		return 1;
 	}
 
-	public static int onTpAcceptCommand(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
-		ServerPlayerEntity player = context.getSource().getPlayer();
+	private static int onTpAcceptCommand(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
+		final ServerPlayerEntity player = context.getSource().getPlayer();
 		ServerPlayerEntity originPlayer = null;
-		List<ServerPlayerEntity> playerList = player.server.getPlayerManager().getPlayerList();
+		final List<ServerPlayerEntity> playerList = player.server.getPlayerManager().getPlayerList();
 
 		/* check if the destination player is in the requests */
 		if (tp.containsKey(player.getUuid())) {
@@ -121,8 +124,8 @@ public class TpaCommand {
 			}
 
 			/* send message confirming that the TPA request was accepted to both players */
-			TextComponent requestAcceptedFromMessage = new StringTextComponent(String.format("\u00a76TPA request from \u00a74%s\u00a76 accepted. \u00a76Teleporting...", originPlayer.getDisplayName().getText()));
-			TextComponent requestAcceptedToMessage = new StringTextComponent(String.format("\u00a76TPA request to \u00a74%s\u00a76 accepted. \u00a76Teleporting...", player.getDisplayName().getText()));
+			final TextComponent requestAcceptedFromMessage = new StringTextComponent(String.format("\u00a76TPA request from \u00a74%s\u00a76 accepted. \u00a76Teleporting...", originPlayer.getDisplayName().getText()));
+			final TextComponent requestAcceptedToMessage = new StringTextComponent(String.format("\u00a76TPA request to \u00a74%s\u00a76 accepted. \u00a76Teleporting...", player.getDisplayName().getText()));
 
 			originPlayer.addChatMessage(requestAcceptedToMessage, false);
 			context.getSource().sendFeedback(requestAcceptedFromMessage, false);
@@ -132,14 +135,14 @@ public class TpaCommand {
 			tp.remove(player.getUuid());
 			return 1;
 		} else {
-			throw new CommandException(new StringTextComponent(String.format("You have no requests to accept!")));
+			throw new CommandException(new StringTextComponent("You have no requests to accept!"));
 		}
 	}
 
-	public static int onTpDenyCommand(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
-		ServerPlayerEntity player = context.getSource().getPlayer();
+	private static int onTpDenyCommand(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
+		final ServerPlayerEntity player = context.getSource().getPlayer();
 		ServerPlayerEntity originPlayer = null;
-		List<ServerPlayerEntity> playerList = player.server.getPlayerManager().getPlayerList();
+		final List<ServerPlayerEntity> playerList = player.server.getPlayerManager().getPlayerList();
 
 		/* check if the destination player is in the requests */
 		if (tp.containsKey(player.getUuid())) {
@@ -153,12 +156,12 @@ public class TpaCommand {
 			/* throw an exception if the origin player is no longer in the server */
 			if (originPlayer == null) {
 				tp.remove(player.getUuid());
-				throw new CommandException(new StringTextComponent(String.format("Requesting player no longer online!")));
+				throw new CommandException(new StringTextComponent("Requesting player no longer online!"));
 			}
 
 			/* send message confirming that the request was denied to both players */
-			TextComponent requestDeniedFromMessage = new StringTextComponent(String.format("\u00a7cTPA request from \u00a74%s\u00a7c denied.", originPlayer.getDisplayName().getText()));
-			TextComponent requestDeniedToMessage = new StringTextComponent(String.format("\u00a7cTPA request to \u00a74%s\u00a7c denied.", player.getDisplayName().getText()));
+			final TextComponent requestDeniedFromMessage = new StringTextComponent(String.format("\u00a7cTPA request from \u00a74%s\u00a7c denied.", originPlayer.getDisplayName().getText()));
+			final TextComponent requestDeniedToMessage = new StringTextComponent(String.format("\u00a7cTPA request to \u00a74%s\u00a7c denied.", player.getDisplayName().getText()));
 
 			context.getSource().sendFeedback(requestDeniedFromMessage, false);
 			originPlayer.addChatMessage(requestDeniedToMessage, false);
@@ -167,7 +170,7 @@ public class TpaCommand {
 
 			return 1;
 		} else {
-			throw new CommandException(new StringTextComponent(String.format("You have no requests to deny!")));
+			throw new CommandException(new StringTextComponent("You have no requests to deny!"));
 		}
 	}
 }

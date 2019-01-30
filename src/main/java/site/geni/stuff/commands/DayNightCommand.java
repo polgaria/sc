@@ -43,9 +43,9 @@ public class DayNightCommand {
 		);
 	}
 
-	public static int onCycleCommand(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
-		ServerPlayerEntity player = context.getSource().getPlayer();
-		long time = player.world.getTimeOfDay();
+	private static int onCycleCommand(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
+		final ServerPlayerEntity player = context.getSource().getPlayer();
+		final long time = player.world.getTimeOfDay();
 
 		if (time >= 12516) {
 			player.world.setTimeOfDay(0);
@@ -57,8 +57,8 @@ public class DayNightCommand {
 		return 1;
 	}
 
-	public static int onDayCommand(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
-		ServerPlayerEntity player = context.getSource().getPlayer();
+	private static int onDayCommand(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
+		final ServerPlayerEntity player = context.getSource().getPlayer();
 
 		player.world.setTimeOfDay(0);
 		context.getSource().sendFeedback(dayMessage, false);
@@ -66,8 +66,8 @@ public class DayNightCommand {
 		return 1;
 	}
 
-	public static int onNightCommand(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
-		ServerPlayerEntity player = context.getSource().getPlayer();
+	private static int onNightCommand(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
+		final ServerPlayerEntity player = context.getSource().getPlayer();
 
 		player.world.setTimeOfDay(13000);
 		context.getSource().sendFeedback(nightMessage, false);

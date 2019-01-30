@@ -38,8 +38,8 @@ public class WeatherCommand {
 		);
 	}
 
-	public static int onRainCommand(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
-		ServerPlayerEntity player = context.getSource().getPlayer();
+	private static int onRainCommand(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
+		final ServerPlayerEntity player = context.getSource().getPlayer();
 		if (setRaining(player.getServerWorld())) {
 			player.server.getPlayerManager().sendToAll(startRainMessage);
 		} else {
@@ -48,8 +48,8 @@ public class WeatherCommand {
 		return 1;
 	}
 
-	public static int onThunderCommand(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
-		ServerPlayerEntity player = context.getSource().getPlayer();
+	private static int onThunderCommand(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
+		final ServerPlayerEntity player = context.getSource().getPlayer();
 		if (setThundering(player.getServerWorld())) {
 			player.server.getPlayerManager().sendToAll(startThunderMessage);
 		} else {
@@ -59,8 +59,9 @@ public class WeatherCommand {
 	}
 
 	private static boolean setRaining(ServerWorld world) {
-		LevelProperties properties = world.getLevelProperties();
+		final LevelProperties properties = world.getLevelProperties();
 		if (properties.isRaining()) {
+			properties.setClearWeatherTime(6000);
 			properties.setRainTime(0);
 			properties.setRaining(false);
 			return false;
@@ -72,8 +73,9 @@ public class WeatherCommand {
 	}
 
 	private static boolean setThundering(ServerWorld world) {
-		LevelProperties properties = world.getLevelProperties();
+		final LevelProperties properties = world.getLevelProperties();
 		if (properties.isThundering()) {
+			properties.setClearWeatherTime(6000);
 			properties.setThunderTime(0);
 			properties.setThundering(false);
 			return false;
