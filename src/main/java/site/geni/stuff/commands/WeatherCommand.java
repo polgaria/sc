@@ -12,11 +12,11 @@ import net.minecraft.text.TextComponent;
 import net.minecraft.world.level.LevelProperties;
 
 public class WeatherCommand {
-	private final static TextComponent startRainMessage = new StringTextComponent("\u00a76Rain started.");
-	private final static TextComponent stopRainMessage = new StringTextComponent("\u00a76Rain stopped.");
+	private final static TextComponent START_RAIN_MESSAGE = new StringTextComponent("\u00a76Rain started.");
+	private final static TextComponent STOP_RAIN_MESSAGE = new StringTextComponent("\u00a76Rain stopped.");
 
-	private final static TextComponent startThunderMessage = new StringTextComponent("\u00a76Thunder started.");
-	private final static TextComponent stopThunderMessage = new StringTextComponent("\u00a76Thunder stopped.");
+	private final static TextComponent START_THUNDER_MESSAGE = new StringTextComponent("\u00a76Thunder started.");
+	private final static TextComponent STOP_THUNDER_MESSAGE = new StringTextComponent("\u00a76Thunder stopped.");
 
 	public static void register() {
 		/* register rain command */
@@ -41,9 +41,9 @@ public class WeatherCommand {
 	private static int onRainCommand(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
 		final ServerPlayerEntity player = context.getSource().getPlayer();
 		if (setRaining(player.getServerWorld())) {
-			player.server.getPlayerManager().sendToAll(startRainMessage);
+			player.server.getPlayerManager().sendToAll(START_RAIN_MESSAGE);
 		} else {
-			player.server.getPlayerManager().sendToAll(stopRainMessage);
+			player.server.getPlayerManager().sendToAll(STOP_RAIN_MESSAGE);
 		}
 		return 1;
 	}
@@ -51,9 +51,9 @@ public class WeatherCommand {
 	private static int onThunderCommand(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
 		final ServerPlayerEntity player = context.getSource().getPlayer();
 		if (setThundering(player.getServerWorld())) {
-			player.server.getPlayerManager().sendToAll(startThunderMessage);
+			player.server.getPlayerManager().sendToAll(START_THUNDER_MESSAGE);
 		} else {
-			player.server.getPlayerManager().sendToAll(stopThunderMessage);
+			player.server.getPlayerManager().sendToAll(STOP_THUNDER_MESSAGE);
 		}
 		return 1;
 	}

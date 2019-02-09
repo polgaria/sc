@@ -13,19 +13,19 @@ public class SeedCommand {
 		ServerEvent.START.register(
 				server -> server.getCommandManager().getDispatcher().register(
 						ServerCommandManager.literal("seed").executes(
-								context -> onCommand(context)
+								commandContext -> onCommand(commandContext)
 						)
 				)
 		);
 	}
 
-	private static int onCommand(CommandContext<ServerCommandSource> context) {
-		final long seed = context.getSource().getWorld().getSeed();
+	private static int onCommand(CommandContext<ServerCommandSource> commandContext) {
+		final long seed = commandContext.getSource().getWorld().getSeed();
 
-		TextComponent textComponent_1 = TextFormatter.bracketed((new StringTextComponent(String.valueOf(seed))).modifyStyle((style) -> {
-			style.setColor(TextFormat.GREEN).setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, String.valueOf(seed))).setInsertion(String.valueOf(seed));
-		}));
-		context.getSource().sendFeedback(new TranslatableTextComponent("commands.seed.success", textComponent_1).applyFormat(TextFormat.GOLD), false);
+		final TextComponent textComponent_1 = TextFormatter.bracketed((new StringTextComponent(String.valueOf(seed))).modifyStyle(style ->
+			style.setColor(TextFormat.GREEN).setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, String.valueOf(seed))).setInsertion(String.valueOf(seed))
+		));
+		commandContext.getSource().sendFeedback(new TranslatableTextComponent("commands.seed.success", textComponent_1).applyFormat(TextFormat.GOLD), false);
 
 		return (int) seed;
 	}

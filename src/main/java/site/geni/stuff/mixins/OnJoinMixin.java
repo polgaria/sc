@@ -32,7 +32,8 @@ public class OnJoinMixin {
 		final int maxPlayerCount = serverPlayerManager.getMaxPlayerCount();
 
 		final TextComponent playersMessage = new StringTextComponent(String.format("\u00a76There are \u00a74%d\u00a76 out of \u00a74%d\u00a76 maximum players online.", playerCount, maxPlayerCount));
-		final TextComponent timeMessage = new StringTextComponent(String.format(TimeCommand.timeDateString, timeCal.getTime().toString(), timeOfDay));
+		final TextComponent timeMessage = new StringTextComponent(String.format(TimeCommand.getTimeDateString(), timeCal.getTime().toString(), timeOfDay));
+
 		entity.addChatMessage(playersMessage, false);
 		entity.addChatMessage(timeMessage, false);
 	}

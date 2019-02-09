@@ -18,18 +18,19 @@ import net.minecraft.text.StringTextComponent;
 import net.minecraft.text.TextFormat;
 import net.minecraft.text.TranslatableTextComponent;
 
-public class iCommand {
+public class ItemCommand {
 	public static void register() {
+		/* registers i command */
 		ServerEvent.START.register(
 				server -> server.getCommandManager().getDispatcher().register(
 						ServerCommandManager.literal("i").requires(serverCommandSource ->
 								serverCommandSource.hasPermissionLevel(2)
 						).then(
 								ServerCommandManager.argument("item", ItemStackArgumentType.create()).executes(
-										commandContext_1 -> onCommand(commandContext_1, ItemStackArgumentType.method_9777(commandContext_1, "item"), 1)
+										commandContext -> onCommand(commandContext, ItemStackArgumentType.method_9777(commandContext, "item"), 1)
 								).then(
 										ServerCommandManager.argument("count", IntegerArgumentType.integer(1)).executes(
-												commandContext_1 -> onCommand(commandContext_1, ItemStackArgumentType.method_9777(commandContext_1, "item"), IntegerArgumentType.getInteger(commandContext_1, "count"))
+												commandContext -> onCommand(commandContext, ItemStackArgumentType.method_9777(commandContext, "item"), IntegerArgumentType.getInteger(commandContext, "count"))
 										)
 								)
 						)
@@ -43,6 +44,7 @@ public class iCommand {
 		ItemStack itemStack = item.method_9781(amount, false);
 		boolean canInsertItem = context.getSource().getPlayer().inventory.insertStack(itemStack);
 
+		/* if the player's inventory is full */
 		if (!canInsertItem) {
 			throw new CommandException(new StringTextComponent("Your inventory is full!"));
 		} else if (itemStack.isEmpty()) {

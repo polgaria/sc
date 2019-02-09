@@ -42,6 +42,7 @@ public class ListCommand {
 	private static int send_list(ServerCommandSource serverCommandSource, Function<ServerPlayerEntity, TextComponent> function) {
 		final PlayerManager playerManager = serverCommandSource.getMinecraftServer().getPlayerManager();
 		final List<ServerPlayerEntity> playerList = playerManager.getPlayerList();
+
 		final TextComponent textComponent = TextFormatter.join(playerList, function);
 
 		serverCommandSource.sendFeedback(new StringTextComponent(String.format("\u00a76There are \u00a74%s\u00a76 out of \u00a74%s\u00a76 maximum players online:\u00a7r %s", playerList.size(), playerManager.getMaxPlayerCount(), textComponent.getFormattedText())), false);

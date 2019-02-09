@@ -8,11 +8,10 @@ import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.StringTextComponent;
 import net.minecraft.text.TextComponent;
-import net.minecraft.text.TextFormat;
 
 public class DayNightCommand {
-	private final static TextComponent dayMessage = new StringTextComponent("\u00a76Time set to day. (0)");
-	private final static TextComponent nightMessage = new StringTextComponent("\u00a76Time set to night. (13000)");
+	private final static TextComponent DAY_MESSAGE = new StringTextComponent("\u00a76Time set to day. (0)");
+	private final static TextComponent NIGHT_MESSAGE = new StringTextComponent("\u00a76Time set to night. (13000)");
 
 	public static void register() {
 		/* register cycle command */
@@ -49,10 +48,10 @@ public class DayNightCommand {
 
 		if (time >= 12516) {
 			player.world.setTimeOfDay(0);
-			context.getSource().sendFeedback(dayMessage, false);
+			context.getSource().sendFeedback(DAY_MESSAGE, false);
 		} else {
 			player.world.setTimeOfDay(13000);
-			context.getSource().sendFeedback(nightMessage, false);
+			context.getSource().sendFeedback(NIGHT_MESSAGE, false);
 		}
 		return 1;
 	}
@@ -61,7 +60,7 @@ public class DayNightCommand {
 		final ServerPlayerEntity player = context.getSource().getPlayer();
 
 		player.world.setTimeOfDay(0);
-		context.getSource().sendFeedback(dayMessage, false);
+		context.getSource().sendFeedback(DAY_MESSAGE, false);
 
 		return 1;
 	}
@@ -70,7 +69,7 @@ public class DayNightCommand {
 		final ServerPlayerEntity player = context.getSource().getPlayer();
 
 		player.world.setTimeOfDay(13000);
-		context.getSource().sendFeedback(nightMessage, false);
+		context.getSource().sendFeedback(NIGHT_MESSAGE, false);
 
 		return 1;
 	}

@@ -11,13 +11,13 @@ import java.util.Locale;
 import java.util.TimeZone;
 
 public class TimeCommand {
-	private static final int ticksAtMidnight = 18000;
-	private static final int ticksPerDay = 24000;
-	private static final int ticksPerHour = 1000;
-	private static final double ticksPerMinute = 1000d / 60d;
-	private static final double ticksPerSecond = 1000d / 60d / 60d;
+	private static final int TICKS_AT_MIDNIGHT = 18000;
+	private static final int TICKS_PER_DAY = 24000;
+	private static final int TICKS_PER_HOUR = 1000;
+	private static final double TICKS_PER_MINUTE = 1000d / 60d;
+	private static final double TICKS_PER_SECOND = 1000d / 60d / 60d;
 
-	public static final String timeDateString = "\u00a76The date and time is \u00a7a%s\u00a76. (\u00a7a%d\u00a76)";
+	private static final String TIME_DATE_STRING = "\u00a76The date and time is \u00a7a%s\u00a76. (\u00a7a%d\u00a76)";
 
 	public static void register() {
 		/* register time command */
@@ -31,28 +31,29 @@ public class TimeCommand {
 	}
 
 	private static int onCommand(CommandContext<ServerCommandSource> context) {
-		// very cool EssentialsX calculations
-		final long timeOfDay = context.getSource().getWorld().getTimeOfDay();
+		final ServerCommandSource commandSource = context.getSource();
+
+		final long timeOfDay = commandSource.getWorld().getTimeOfDay();
 		Calendar cal = getTime(timeOfDay);
 
-		context.getSource().sendFeedback(new StringTextComponent(String.format(timeDateString, cal.getTime().toString(), timeOfDay)), false);
+		commandSource.sendFeedback(new StringTextComponent(String.format(TIME_DATE_STRING, cal.getTime().toString(), timeOfDay)), false);
 		return (int) (timeOfDay);
 	}
 
 	public static Calendar getTime(long ticks) {
 		// very cool EssentialsX calculations
-		ticks = ticks - ticksAtMidnight + ticksPerDay;
+		ticks = ticks - TICKS_AT_MIDNIGHT + TICKS_PER_DAY;
 
-		final long days = ticks / ticksPerDay;
-		ticks -= days * ticksPerDay;
+		final long days = ticks / TICKS_PER_DAY;
+		ticks -= days * TICKS_PER_DAY;
 
-		final long hours = ticks / ticksPerHour;
-		ticks -= hours * ticksPerHour;
+		final long hours = ticks / TICKS_PER_HOUR;
+		ticks -= hours * TICKS_PER_HOUR;
 
-		final long minutes = (long) Math.floor(ticks / ticksPerMinute);
-		final double dticks = ticks - minutes * ticksPerMinute;
+		final long minutes = (long) Math.floor(ticks / TICKS_PER_MINUTE);
+		final double dticks = ticks - minutes * TICKS_PER_MINUTE;
 
-		final long seconds = (long) Math.floor(dticks / ticksPerSecond);
+		final long seconds = (long) Math.floor(dticks / TICKS_PER_SECOND);
 
 		final Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("GMT"), Locale.ENGLISH);
 		cal.setLenient(true);
@@ -64,5 +65,9 @@ public class TimeCommand {
 		cal.add(Calendar.SECOND, (int) seconds + 1);
 
 		return cal;
+	}
+
+	public static String getTimeDateString() {
+		return TIME_DATE_STRING;
 	}
 }
