@@ -3,7 +3,7 @@ package site.geni.stuff.commands;
 import com.google.common.collect.HashBiMap;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
-import net.fabricmc.fabric.events.ServerEvent;
+import net.fabricmc.fabric.api.event.server.ServerStartCallback;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.arguments.EntityArgumentType;
 import net.minecraft.server.command.ServerCommandManager;
@@ -22,7 +22,7 @@ public class TpaCommand {
 
 	public static void register() {
 		/* register tpa command */
-		ServerEvent.START.register(
+		ServerStartCallback.EVENT.register(
 				server -> server.getCommandManager().getDispatcher().register(
 						ServerCommandManager.literal("tpa").then(
 								ServerCommandManager.argument(
@@ -35,7 +35,7 @@ public class TpaCommand {
 		);
 
 		/* register tpaccept command */
-		ServerEvent.START.register(
+		ServerStartCallback.EVENT.register(
 				server -> server.getCommandManager().getDispatcher().register(
 						ServerCommandManager.literal("tpaccept").executes(
 								commandContext -> onTpAcceptCommand(commandContext, commandContext.getSource().getPlayer())
@@ -44,7 +44,7 @@ public class TpaCommand {
 		);
 
 		/* register tpadeny command */
-		ServerEvent.START.register(
+		ServerStartCallback.EVENT.register(
 				server -> server.getCommandManager().getDispatcher().register(
 						ServerCommandManager.literal("tpadeny").executes(
 								commandContext -> onTpDenyCommand(commandContext, commandContext.getSource().getPlayer())

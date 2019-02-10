@@ -1,6 +1,7 @@
 package site.geni.stuff.commands;
 
-import net.fabricmc.fabric.events.ServerEvent;
+
+import net.fabricmc.fabric.api.event.server.ServerStartCallback;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.PlayerManager;
 import net.minecraft.server.command.ServerCommandManager;
@@ -16,7 +17,7 @@ import java.util.function.Function;
 public class ListCommand {
 	public static void register() {
 		/* registers list command */
-		ServerEvent.START.register(
+		ServerStartCallback.EVENT.register(
 				server -> server.getCommandManager().getDispatcher().register(
 						ServerCommandManager.literal("list").executes(
 								context -> get_usernames(context.getSource())

@@ -3,7 +3,7 @@ package site.geni.stuff.commands;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
-import net.fabricmc.fabric.events.ServerEvent;
+import net.fabricmc.fabric.api.event.server.ServerStartCallback;
 import net.minecraft.class_2290;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.arguments.ItemStackArgumentType;
@@ -21,7 +21,7 @@ import net.minecraft.text.TranslatableTextComponent;
 public class ItemCommand {
 	public static void register() {
 		/* registers i command */
-		ServerEvent.START.register(
+		ServerStartCallback.EVENT.register(
 				server -> server.getCommandManager().getDispatcher().register(
 						ServerCommandManager.literal("i").requires(serverCommandSource ->
 								serverCommandSource.hasPermissionLevel(2)

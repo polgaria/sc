@@ -2,7 +2,7 @@ package site.geni.stuff.commands;
 
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
-import net.fabricmc.fabric.events.ServerEvent;
+import net.fabricmc.fabric.api.event.server.ServerStartCallback;
 import net.minecraft.server.command.ServerCommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -20,7 +20,7 @@ public class WeatherCommand {
 
 	public static void register() {
 		/* register rain command */
-		ServerEvent.START.register(
+		ServerStartCallback.EVENT.register(
 				server -> server.getCommandManager().getDispatcher().register(
 						ServerCommandManager.literal("rain").executes(
 								context -> onRainCommand(context)
@@ -29,7 +29,7 @@ public class WeatherCommand {
 		);
 
 		/* register thunder command */
-		ServerEvent.START.register(
+		ServerStartCallback.EVENT.register(
 				server -> server.getCommandManager().getDispatcher().register(
 						ServerCommandManager.literal("thunder").executes(
 								context -> onThunderCommand(context)

@@ -2,7 +2,7 @@ package site.geni.stuff.commands;
 
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
-import net.fabricmc.fabric.events.ServerEvent;
+import net.fabricmc.fabric.api.event.server.ServerStartCallback;
 import net.minecraft.server.command.ServerCommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -15,7 +15,7 @@ public class DayNightCommand {
 
 	public static void register() {
 		/* register cycle command */
-		ServerEvent.START.register(
+		ServerStartCallback.EVENT.register(
 				server -> server.getCommandManager().getDispatcher().register(
 						ServerCommandManager.literal("cycle").executes(
 								context -> onCycleCommand(context)
@@ -24,7 +24,7 @@ public class DayNightCommand {
 		);
 
 		/* register day command */
-		ServerEvent.START.register(
+		ServerStartCallback.EVENT.register(
 				server -> server.getCommandManager().getDispatcher().register(
 						ServerCommandManager.literal("day").executes(
 								context -> onDayCommand(context)
@@ -33,7 +33,7 @@ public class DayNightCommand {
 		);
 
 		/* register night command */
-		ServerEvent.START.register(
+		ServerStartCallback.EVENT.register(
 				server -> server.getCommandManager().getDispatcher().register(
 						ServerCommandManager.literal("night").executes(
 								context -> onNightCommand(context)
@@ -53,6 +53,7 @@ public class DayNightCommand {
 			player.world.setTimeOfDay(13000);
 			context.getSource().sendFeedback(NIGHT_MESSAGE, false);
 		}
+
 		return 1;
 	}
 

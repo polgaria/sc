@@ -1,7 +1,7 @@
 package site.geni.stuff.commands;
 
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
-import net.fabricmc.fabric.events.ServerEvent;
+import net.fabricmc.fabric.api.event.server.ServerStartCallback;
 import net.minecraft.command.arguments.EntityArgumentType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.command.ServerCommandManager;
@@ -17,7 +17,7 @@ import java.util.Collections;
 public class HealCommand {
 	public static void register() {
 		/* registers heal command */
-		ServerEvent.START.register(
+		ServerStartCallback.EVENT.register(
 				server -> server.getCommandManager().getDispatcher().register(
 						ServerCommandManager.literal("heal").requires(serverCommandSource ->
 								serverCommandSource.hasPermissionLevel(2)

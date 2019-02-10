@@ -1,7 +1,7 @@
 package site.geni.stuff.commands;
 
 import com.mojang.brigadier.context.CommandContext;
-import net.fabricmc.fabric.events.ServerEvent;
+import net.fabricmc.fabric.api.event.server.ServerStartCallback;
 import net.minecraft.server.command.ServerCommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.text.StringTextComponent;
@@ -21,7 +21,7 @@ public class TimeCommand {
 
 	public static void register() {
 		/* register time command */
-		ServerEvent.START.register(
+		ServerStartCallback.EVENT.register(
 				server -> server.getCommandManager().getDispatcher().register(
 						ServerCommandManager.literal("time").executes(
 								context -> onCommand(context)

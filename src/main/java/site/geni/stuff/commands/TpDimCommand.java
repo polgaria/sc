@@ -2,7 +2,7 @@ package site.geni.stuff.commands;
 
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
-import net.fabricmc.fabric.events.ServerEvent;
+import net.fabricmc.fabric.api.event.server.ServerStartCallback;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.arguments.DimensionArgumentType;
 import net.minecraft.server.command.ServerCommandManager;
@@ -15,7 +15,7 @@ import net.minecraft.world.dimension.DimensionType;
 public class TpDimCommand {
 	public static void register() {
 		/* register tpdim command */
-		ServerEvent.START.register(
+		ServerStartCallback.EVENT.register(
 				server -> server.getCommandManager().getDispatcher().register(
 						ServerCommandManager.literal("tpdim").requires(
 								source -> source.hasPermissionLevel(1)
