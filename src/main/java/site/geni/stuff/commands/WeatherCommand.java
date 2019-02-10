@@ -9,14 +9,15 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.StringTextComponent;
 import net.minecraft.text.TextComponent;
+import net.minecraft.text.TextFormat;
 import net.minecraft.world.level.LevelProperties;
 
 public class WeatherCommand {
-	private final static TextComponent START_RAIN_MESSAGE = new StringTextComponent("\u00a76Rain started.");
-	private final static TextComponent STOP_RAIN_MESSAGE = new StringTextComponent("\u00a76Rain stopped.");
+	private final static TextComponent START_RAIN_MESSAGE = new StringTextComponent("Rain started.").applyFormat(TextFormat.GOLD);
+	private final static TextComponent STOP_RAIN_MESSAGE = new StringTextComponent("Rain stopped.").applyFormat(TextFormat.GOLD);
 
-	private final static TextComponent START_THUNDER_MESSAGE = new StringTextComponent("\u00a76Thunder started.");
-	private final static TextComponent STOP_THUNDER_MESSAGE = new StringTextComponent("\u00a76Thunder stopped.");
+	private final static TextComponent START_THUNDER_MESSAGE = new StringTextComponent("Thunder started.").applyFormat(TextFormat.GOLD);
+	private final static TextComponent STOP_THUNDER_MESSAGE = new StringTextComponent("Thunder stopped.").applyFormat(TextFormat.GOLD);
 
 	public static void register() {
 		/* register rain command */
@@ -45,7 +46,7 @@ public class WeatherCommand {
 		} else {
 			player.server.getPlayerManager().sendToAll(STOP_RAIN_MESSAGE);
 		}
-		
+
 		return 1;
 	}
 
@@ -66,10 +67,12 @@ public class WeatherCommand {
 			properties.setClearWeatherTime(6000);
 			properties.setRainTime(0);
 			properties.setRaining(false);
+
 			return false;
 		} else {
 			properties.setRainTime(world.random.nextInt(12000) + 12000);
 			properties.setRaining(true);
+
 			return true;
 		}
 	}
@@ -80,10 +83,12 @@ public class WeatherCommand {
 			properties.setClearWeatherTime(6000);
 			properties.setThunderTime(0);
 			properties.setThundering(false);
+
 			return false;
 		} else {
 			properties.setThunderTime(world.random.nextInt(12000) + 3600);
 			properties.setThundering(true);
+
 			return true;
 		}
 	}

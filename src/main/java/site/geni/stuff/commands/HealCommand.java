@@ -9,6 +9,7 @@ import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sortme.ChatMessageType;
 import net.minecraft.text.StringTextComponent;
+import net.minecraft.text.TextFormat;
 import net.minecraft.text.TextFormatter;
 
 import java.util.Collection;
@@ -39,11 +40,11 @@ public class HealCommand {
 			player.getHungerManager().setFoodLevel(20);
 
 			if (!player.equals(commandSource.getPlayer())) {
-				player.sendChatMessage(new StringTextComponent("\u00a76You have been healed!"), ChatMessageType.CHAT);
+				player.sendChatMessage(new StringTextComponent("You have been healed!").applyFormat(TextFormat.GOLD), ChatMessageType.CHAT);
 			}
 		}
 
-		commandSource.sendFeedback(new StringTextComponent(String.format("\u00a76Healed \u00a74%s\u00a76!", TextFormatter.join(players, PlayerEntity::getDisplayName).getString())), false);
+		commandSource.sendFeedback(new StringTextComponent("Healed ").append(TextFormatter.join(players, PlayerEntity::getDisplayName).applyFormat(TextFormat.DARK_RED).append("!")), false);
 
 		return 1;
 	}

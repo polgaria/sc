@@ -16,7 +16,6 @@ import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.StringTextComponent;
 import net.minecraft.text.TextFormat;
-import net.minecraft.text.TranslatableTextComponent;
 
 public class ItemCommand {
 	public static void register() {
@@ -66,7 +65,7 @@ public class ItemCommand {
 			}
 		}
 
-		context.getSource().sendFeedback(new TranslatableTextComponent("\u00a76Gave you \u00a7a%s %s\u00a76.", amount, item.method_9781(amount, false).toTextComponent().applyFormat(TextFormat.DARK_RED)), true);
+		context.getSource().sendFeedback(new StringTextComponent("Gave you ").append(Integer.toString(amount)).append(" ").append(item.method_9781(amount, false).toTextComponent().applyFormat(TextFormat.DARK_RED)).append(".").applyFormat(TextFormat.GOLD), true);
 
 		return amount;
 	}

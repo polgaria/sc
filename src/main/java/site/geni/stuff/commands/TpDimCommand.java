@@ -10,6 +10,7 @@ import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.StringTextComponent;
 import net.minecraft.text.TextComponent;
+import net.minecraft.text.TextFormat;
 import net.minecraft.world.dimension.DimensionType;
 
 public class TpDimCommand {
@@ -35,7 +36,9 @@ public class TpDimCommand {
 		final DimensionType dimensionType = DimensionArgumentType.getDimensionArgument(context, "dimension");
 
 		if (dimensionType != null && dimensionType != player.dimension) {
-			final TextComponent tpMessage = new StringTextComponent(String.format("\u00a76Teleporting to %s...", dimensionType.toString()));
+			final TextComponent dimension = new StringTextComponent(dimensionType.toString()).applyFormat(TextFormat.DARK_RED);
+
+			final TextComponent tpMessage = new StringTextComponent("Teleporting to ").append(dimension).append("...");
 			context.getSource().sendFeedback(tpMessage, false);
 
 			player.setInPortal(player.getPos());
@@ -43,8 +46,7 @@ public class TpDimCommand {
 
 			return 1;
 		} else if (dimensionType == player.dimension) {
-			final TextComponent alreadyInDimMessage = new StringTextComponent(String.format("You are already in %s!", dimensionType.toString()));
-			throw new CommandException(alreadyInDimMessage);
+			throw new CommandException(new StringTextComponent(String.format("You are already in %s!", dimensionType.toString())));
 		} else
 			throw new CommandException(new StringTextComponent("Unexpected error."));
 	}

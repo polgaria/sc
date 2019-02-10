@@ -5,6 +5,8 @@ import net.fabricmc.fabric.api.event.server.ServerStartCallback;
 import net.minecraft.server.command.ServerCommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.text.StringTextComponent;
+import net.minecraft.text.TextComponent;
+import net.minecraft.text.TextFormat;
 
 import java.util.Calendar;
 import java.util.Locale;
@@ -17,7 +19,7 @@ public class TimeCommand {
 	private static final double TICKS_PER_MINUTE = 1000d / 60d;
 	private static final double TICKS_PER_SECOND = 1000d / 60d / 60d;
 
-	private static final String TIME_DATE_STRING = "\u00a76The date and time is \u00a7a%s\u00a76. (\u00a7a%d\u00a76)";
+	private static final String TIME_DATE_STRING = "The date and time is \u00a7a%s\u00a76. (\u00a7a%d\u00a76)";
 
 	public static void register() {
 		/* register time command */
@@ -34,9 +36,10 @@ public class TimeCommand {
 		final ServerCommandSource commandSource = context.getSource();
 
 		final long timeOfDay = commandSource.getWorld().getTimeOfDay();
-		Calendar cal = getTime(timeOfDay);
+		final TextComponent date = new StringTextComponent(getTime(timeOfDay).getTime().toString()).applyFormat(TextFormat.GREEN);
+		final TextComponent timeOfDayText = new StringTextComponent(Long.toString(timeOfDay)).applyFormat(TextFormat.GREEN);
 
-		commandSource.sendFeedback(new StringTextComponent(String.format(TIME_DATE_STRING, cal.getTime().toString(), timeOfDay)), false);
+		commandSource.sendFeedback(new StringTextComponent("The date and time is ").append(date).append(" (").append(timeOfDayText).append(")").applyFormat(TextFormat.GOLD), false);
 		return (int) (timeOfDay);
 	}
 
@@ -65,9 +68,5 @@ public class TimeCommand {
 		cal.add(Calendar.SECOND, (int) seconds + 1);
 
 		return cal;
-	}
-
-	public static String getTimeDateString() {
-		return TIME_DATE_STRING;
 	}
 }

@@ -9,6 +9,7 @@ import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.StringTextComponent;
 import net.minecraft.text.TextComponent;
+import net.minecraft.text.TextFormat;
 import net.minecraft.text.TextFormatter;
 
 import java.util.List;
@@ -44,9 +45,10 @@ public class ListCommand {
 		final PlayerManager playerManager = serverCommandSource.getMinecraftServer().getPlayerManager();
 		final List<ServerPlayerEntity> playerList = playerManager.getPlayerList();
 
-		final TextComponent textComponent = TextFormatter.join(playerList, function);
+		final TextComponent textComponent = TextFormatter.join(playerList, function).applyFormat(TextFormat.RESET);
 
-		serverCommandSource.sendFeedback(new StringTextComponent(String.format("\u00a76There are \u00a74%s\u00a76 out of \u00a74%s\u00a76 maximum players online:\u00a7r %s", playerList.size(), playerManager.getMaxPlayerCount(), textComponent.getFormattedText())), false);
+		serverCommandSource.sendFeedback(new StringTextComponent("There are ").append(Integer.toString(playerList.size())).append(" out of ").append(Integer.toString(playerManager.getMaxPlayerCount())).append(" maximum players online: ").append(textComponent), false);
+
 		return playerList.size();
 	}
 }
