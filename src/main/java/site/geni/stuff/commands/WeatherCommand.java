@@ -45,6 +45,7 @@ public class WeatherCommand {
 		} else {
 			player.server.getPlayerManager().sendToAll(STOP_RAIN_MESSAGE);
 		}
+		
 		return 1;
 	}
 
@@ -55,6 +56,7 @@ public class WeatherCommand {
 		} else {
 			player.server.getPlayerManager().sendToAll(STOP_THUNDER_MESSAGE);
 		}
+
 		return 1;
 	}
 

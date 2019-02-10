@@ -53,7 +53,7 @@ public class TpaCommand {
 		);
 	}
 
-	private static int onTpaCommand(CommandContext<ServerCommandSource> commandContext, ServerPlayerEntity originPlayer, ServerPlayerEntity destPlayer) throws CommandSyntaxException {
+	private static int onTpaCommand(CommandContext<ServerCommandSource> commandContext, ServerPlayerEntity originPlayer, ServerPlayerEntity destPlayer) {
 		if (TP.containsKey(destPlayer.getUuid())) {
 			throw new CommandException(new StringTextComponent("This player already has a pending TPA request!"));
 		} else if (TP.containsValue(originPlayer.getUuid())) {
@@ -97,7 +97,7 @@ public class TpaCommand {
 		return 1;
 	}
 
-	private static int onTpAcceptCommand(CommandContext<ServerCommandSource> commandContext, ServerPlayerEntity player) throws CommandSyntaxException {
+	private static int onTpAcceptCommand(CommandContext<ServerCommandSource> commandContext, ServerPlayerEntity player) {
 		ServerPlayerEntity originPlayer = null;
 		final List<ServerPlayerEntity> playerList = player.server.getPlayerManager().getPlayerList();
 
@@ -134,7 +134,7 @@ public class TpaCommand {
 		}
 	}
 
-	private static int onTpDenyCommand(CommandContext<ServerCommandSource> commandContext, ServerPlayerEntity player) throws CommandSyntaxException {
+	private static int onTpDenyCommand(CommandContext<ServerCommandSource> commandContext, ServerPlayerEntity player) {
 		ServerPlayerEntity originPlayer = null;
 		final List<ServerPlayerEntity> playerList = player.server.getPlayerManager().getPlayerList();
 
