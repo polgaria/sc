@@ -11,6 +11,8 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.StringTextComponent;
 import net.minecraft.text.TextComponent;
 import net.minecraft.text.TextFormat;
+import site.geni.stuff.util.AutoAppendTextComponent;
+import site.geni.stuff.util.AutoFormatTextComponent;
 
 import java.util.List;
 import java.util.UUID;
@@ -19,8 +21,9 @@ import java.util.concurrent.TimeUnit;
 
 public class TpaCommand {
 	/* preparations for accept message */
-	private final static TextComponent tpAccept = new StringTextComponent("/tpaccept").applyFormat(TextFormat.GREEN);
-	private final static TextComponent tpDeny = new StringTextComponent("/tpadeny").applyFormat(TextFormat.GREEN);
+	private final static TextComponent tpAccept = new AutoFormatTextComponent("/tpaccept", TextFormat.GREEN);
+	private final static TextComponent tpDeny = new AutoFormatTextComponent("/tpadeny", TextFormat.GREEN);
+
 	/* requests hashmap */
 	private static HashBiMap<UUID, UUID> requests = HashBiMap.create();
 
@@ -71,20 +74,24 @@ public class TpaCommand {
 			throw new CommandException(new StringTextComponent("You can't teleport to yourself!"));
 		}
 
+
 		/* prepare for messages */
-		final TextComponent originPlayerName = new StringTextComponent(originPlayer.getDisplayName().getString()).applyFormat(TextFormat.DARK_RED);
-		final TextComponent destPlayerName = new StringTextComponent(destPlayer.getDisplayName().getString()).applyFormat(TextFormat.DARK_RED);
+		final TextComponent originPlayerName = new AutoFormatTextComponent(originPlayer.getDisplayName().getString(), TextFormat.DARK_RED);
+		final TextComponent destPlayerName = new AutoFormatTextComponent(destPlayer.getDisplayName().getString(), TextFormat.DARK_RED);
 
 		/* send message confirming to origin player that the request has been sent */
-		final TextComponent sentTpaRequest = new StringTextComponent("TPA request to ").append(destPlayerName).append(" has been sent.").applyFormat(TextFormat.GOLD);
+		final TextComponent sentTpaRequest = new AutoAppendTextComponent(TextFormat.GOLD, "TPA request to ", destPlayerName, " has been sent.");
+
 		commandContext.getSource().sendFeedback(sentTpaRequest, false);
 
+
 		/* send message to destination player alerting them of the pending TPA request */
-		final TextComponent receivedTpaRequest = originPlayerName.append(new StringTextComponent(" has sent you a TPA request! Accept with ").append(tpAccept).append(" or deny with ").append(tpDeny).applyFormat(TextFormat.GOLD));
-		final TextComponent tpaRequestExpiresIn = new StringTextComponent("You have 30 seconds to respond until the TPA request expires.").applyFormat(TextFormat.GOLD);
+		final TextComponent receivedTpaRequest = new AutoAppendTextComponent(TextFormat.GOLD, originPlayerName, " has sent you a TPA request! Accept with ", tpAccept, " or deny with ", tpDeny);
+		final TextComponent tpaRequestExpiresIn = new AutoFormatTextComponent("You have 30 seconds to respond until the TPA request expires.", TextFormat.GOLD);
 
 		destPlayer.addChatMessage(receivedTpaRequest, false);
 		destPlayer.addChatMessage(tpaRequestExpiresIn, false);
+
 
 		/* runnable for when the request should expire */
 		final Runnable expire = () -> {
@@ -94,15 +101,15 @@ public class TpaCommand {
 				requests.remove(destPlayer.getUuid());
 
 				/* send messages to both players alerting them that the TPA request has expired */
-				final TextComponent requestExpiredFromMessage = new StringTextComponent("TPA request from ").append(originPlayerName).append(" has expired.").applyFormat(TextFormat.GOLD);
-				final TextComponent requestExpiredToMessage = new StringTextComponent("TPA request to ").append(destPlayerName).append(" has expired.").applyFormat(TextFormat.GOLD);
+				final TextComponent requestExpiredFromMessage = new AutoAppendTextComponent(TextFormat.GOLD, "TPA request from ", originPlayerName, "has expired.");
+				final TextComponent requestExpiredToMessage = new AutoAppendTextComponent(TextFormat.GOLD, "TPA request to ", destPlayerName, "has expired.");
 
 				commandContext.getSource().sendFeedback(requestExpiredToMessage, false);
 				destPlayer.addChatMessage(requestExpiredFromMessage, false);
 			}
 		};
 
-		/* schedule the executor to expire the request after 30 seconds */
+		/* schedule an executor to expire the request after 30 seconds */
 		Executors.newScheduledThreadPool(1).schedule(expire, 30, TimeUnit.SECONDS);
 
 		return 1;
@@ -127,15 +134,17 @@ public class TpaCommand {
 				throw new CommandException(new StringTextComponent("Requesting player no longer online!"));
 			}
 
-			/* send message confirming that the TPA request was accepted to both players */
-			final TextComponent originPlayerName = new StringTextComponent(originPlayer.getDisplayName().getString()).applyFormat(TextFormat.DARK_RED);
-			final TextComponent destPlayerName = new StringTextComponent(player.getDisplayName().getString()).applyFormat(TextFormat.DARK_RED);
 
-			final TextComponent requestAcceptedFromMessage = new StringTextComponent("TPA request from ").append(originPlayerName).append(" has been accepted. Teleporting...").applyFormat(TextFormat.GOLD);
-			final TextComponent requestAcceptedToMessage = new StringTextComponent("TPA request to ").append(destPlayerName).append(" has been accepted. Teleporting...").applyFormat(TextFormat.GOLD);
+			/* send message confirming that the TPA request was accepted to both players */
+			final TextComponent originPlayerName = new AutoFormatTextComponent(originPlayer.getDisplayName().getString(), TextFormat.DARK_RED);
+			final TextComponent destPlayerName = new AutoFormatTextComponent(player.getDisplayName().getString(), TextFormat.DARK_RED);
+
+			final TextComponent requestAcceptedFromMessage = new AutoAppendTextComponent(TextFormat.GOLD, "TPA request from ", originPlayerName, "has been accepted. Teleporting...");
+			final TextComponent requestAcceptedToMessage = new AutoAppendTextComponent(TextFormat.GOLD, "TPA request to ", destPlayerName, "has been accepted. Teleporting...");
 
 			originPlayer.addChatMessage(requestAcceptedToMessage, false);
 			commandContext.getSource().sendFeedback(requestAcceptedFromMessage, false);
+
 
 			/* teleport origin player to destination player */
 			originPlayer.networkHandler.teleportRequest(player.x, player.y, player.z, player.yaw, player.pitch);
@@ -167,14 +176,19 @@ public class TpaCommand {
 				throw new CommandException(new StringTextComponent("Requesting player no longer online!"));
 			}
 
+
 			/* send message confirming that the request was denied to both players */
-			final TextComponent requestDeniedFromMessage = new StringTextComponent(String.format("\u00a7cTPA request from \u00a74%s\u00a7c denied.", originPlayer.getDisplayName().getString()));
-			final TextComponent requestDeniedToMessage = new StringTextComponent(String.format("\u00a7cTPA request to \u00a74%s\u00a7c denied.", player.getDisplayName().getString()));
+			final TextComponent originPlayerName = new AutoFormatTextComponent(originPlayer.getDisplayName().getString(), TextFormat.DARK_RED);
+			final TextComponent destPlayerName = new AutoFormatTextComponent(player.getDisplayName().getString(), TextFormat.DARK_RED);
+
+			final TextComponent requestDeniedFromMessage = new AutoAppendTextComponent(TextFormat.RED, "TPA request from ", originPlayerName, "denied.");
+			final TextComponent requestDeniedToMessage = new AutoAppendTextComponent(TextFormat.RED, "TPA request to ", destPlayerName, "denied.");
 
 			commandContext.getSource().sendFeedback(requestDeniedFromMessage, false);
 			originPlayer.addChatMessage(requestDeniedToMessage, false);
 
 			requests.remove(player.getUuid());
+
 
 			return 1;
 		} else {

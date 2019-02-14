@@ -23,7 +23,7 @@ public class ItemCommand {
 		ServerStartCallback.EVENT.register(
 				server -> server.getCommandManager().getDispatcher().register(
 						ServerCommandManager.literal("i").requires(serverCommandSource ->
-								serverCommandSource.hasPermissionLevel(2)
+								serverCommandSource.hasPermissionLevel(4)
 						).then(
 								ServerCommandManager.argument("item", ItemStackArgumentType.create()).executes(
 										commandContext -> onCommand(commandContext, ItemStackArgumentType.method_9777(commandContext, "item"), 1)

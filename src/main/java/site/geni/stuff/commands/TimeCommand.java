@@ -4,9 +4,10 @@ import com.mojang.brigadier.context.CommandContext;
 import net.fabricmc.fabric.api.event.server.ServerStartCallback;
 import net.minecraft.server.command.ServerCommandManager;
 import net.minecraft.server.command.ServerCommandSource;
-import net.minecraft.text.StringTextComponent;
 import net.minecraft.text.TextComponent;
 import net.minecraft.text.TextFormat;
+import site.geni.stuff.util.AutoAppendTextComponent;
+import site.geni.stuff.util.AutoFormatTextComponent;
 
 import java.util.Calendar;
 import java.util.Locale;
@@ -19,7 +20,6 @@ public class TimeCommand {
 	private static final double TICKS_PER_MINUTE = 1000d / 60d;
 	private static final double TICKS_PER_SECOND = 1000d / 60d / 60d;
 
-	private static final String TIME_DATE_STRING = "The date and time is \u00a7a%s\u00a76. (\u00a7a%d\u00a76)";
 
 	public static void register() {
 		/* register time command */
@@ -36,10 +36,10 @@ public class TimeCommand {
 		final ServerCommandSource commandSource = context.getSource();
 
 		final long timeOfDay = commandSource.getWorld().getTimeOfDay();
-		final TextComponent date = new StringTextComponent(getTime(timeOfDay).getTime().toString()).applyFormat(TextFormat.GREEN);
-		final TextComponent timeOfDayText = new StringTextComponent(Long.toString(timeOfDay)).applyFormat(TextFormat.GREEN);
+		final TextComponent date = new AutoFormatTextComponent(getTime(timeOfDay).getTime().toString(), TextFormat.GREEN);
+		final TextComponent timeOfDayText = new AutoFormatTextComponent(Long.toString(timeOfDay), TextFormat.GREEN);
 
-		commandSource.sendFeedback(new StringTextComponent("The date and time is ").append(date).append(" (").append(timeOfDayText).append(")").applyFormat(TextFormat.GOLD), false);
+		commandSource.sendFeedback(new AutoAppendTextComponent(TextFormat.GOLD, "The date and time is ", date, " (", timeOfDayText, ")"), false);
 		return (int) (timeOfDay);
 	}
 

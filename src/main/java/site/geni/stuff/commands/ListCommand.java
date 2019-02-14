@@ -7,10 +7,11 @@ import net.minecraft.server.PlayerManager;
 import net.minecraft.server.command.ServerCommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.text.StringTextComponent;
 import net.minecraft.text.TextComponent;
 import net.minecraft.text.TextFormat;
 import net.minecraft.text.TextFormatter;
+import site.geni.stuff.util.AutoAppendTextComponent;
+import site.geni.stuff.util.AutoFormatTextComponent;
 
 import java.util.List;
 import java.util.function.Function;
@@ -45,9 +46,9 @@ public class ListCommand {
 		final PlayerManager playerManager = serverCommandSource.getMinecraftServer().getPlayerManager();
 		final List<ServerPlayerEntity> playerList = playerManager.getPlayerList();
 
-		final TextComponent textComponent = TextFormatter.join(playerList, function).applyFormat(TextFormat.RESET);
+		final TextComponent textComponent = new AutoFormatTextComponent(TextFormatter.join(playerList, function), TextFormat.RESET);
 
-		serverCommandSource.sendFeedback(new StringTextComponent("There are ").append(Integer.toString(playerList.size())).append(" out of ").append(Integer.toString(playerManager.getMaxPlayerCount())).append(" maximum players online: ").append(textComponent), false);
+		serverCommandSource.sendFeedback(new AutoAppendTextComponent(TextFormat.GOLD, "There are ", playerList.size(), " out of ", playerManager.getMaxPlayerCount(), " maximum players online: ", textComponent), false);
 
 		return playerList.size();
 	}

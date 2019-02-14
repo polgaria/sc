@@ -6,12 +6,14 @@ import net.fabricmc.fabric.api.event.server.ServerStartCallback;
 import net.minecraft.server.command.ServerCommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.text.StringTextComponent;
 import net.minecraft.text.TextComponent;
+import net.minecraft.text.TextFormat;
+import site.geni.stuff.util.AutoFormatTextComponent;
 
 public class DayNightCommand {
-	private final static TextComponent DAY_MESSAGE = new StringTextComponent("\u00a76Time set to day. (0)");
-	private final static TextComponent NIGHT_MESSAGE = new StringTextComponent("\u00a76Time set to night. (13000)");
+	private final static TextComponent DAY_MESSAGE = new AutoFormatTextComponent("Time set to day. (0)", TextFormat.GOLD);
+	private final static TextComponent NIGHT_MESSAGE = new AutoFormatTextComponent("Time set to night. (13000)", TextFormat.GOLD);
+
 
 	public static void register() {
 		/* register cycle command */

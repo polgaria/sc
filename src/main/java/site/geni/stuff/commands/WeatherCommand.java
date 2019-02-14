@@ -7,17 +7,18 @@ import net.minecraft.server.command.ServerCommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.text.StringTextComponent;
 import net.minecraft.text.TextComponent;
 import net.minecraft.text.TextFormat;
 import net.minecraft.world.level.LevelProperties;
+import site.geni.stuff.util.AutoFormatTextComponent;
 
 public class WeatherCommand {
-	private final static TextComponent START_RAIN_MESSAGE = new StringTextComponent("Rain started.").applyFormat(TextFormat.GOLD);
-	private final static TextComponent STOP_RAIN_MESSAGE = new StringTextComponent("Rain stopped.").applyFormat(TextFormat.GOLD);
+	private final static TextComponent START_RAIN_MESSAGE = new AutoFormatTextComponent("Rain started.", TextFormat.GOLD);
+	private final static TextComponent STOP_RAIN_MESSAGE = new AutoFormatTextComponent("Rain stopped.", TextFormat.GOLD);
 
-	private final static TextComponent START_THUNDER_MESSAGE = new StringTextComponent("Thunder started.").applyFormat(TextFormat.GOLD);
-	private final static TextComponent STOP_THUNDER_MESSAGE = new StringTextComponent("Thunder stopped.").applyFormat(TextFormat.GOLD);
+	private final static TextComponent START_THUNDER_MESSAGE = new AutoFormatTextComponent("Thunder started.", TextFormat.GOLD);
+	private final static TextComponent STOP_THUNDER_MESSAGE = new AutoFormatTextComponent("Thunder stopped.", TextFormat.GOLD);
+
 
 	public static void register() {
 		/* register rain command */

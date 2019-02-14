@@ -8,9 +8,10 @@ import net.minecraft.server.command.ServerCommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sortme.ChatMessageType;
-import net.minecraft.text.StringTextComponent;
 import net.minecraft.text.TextFormat;
 import net.minecraft.text.TextFormatter;
+import site.geni.stuff.util.AutoAppendTextComponent;
+import site.geni.stuff.util.AutoFormatTextComponent;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -21,7 +22,7 @@ public class HealCommand {
 		ServerStartCallback.EVENT.register(
 				server -> server.getCommandManager().getDispatcher().register(
 						ServerCommandManager.literal("heal").requires(serverCommandSource ->
-								serverCommandSource.hasPermissionLevel(2)
+								serverCommandSource.hasPermissionLevel(4)
 						).executes(
 								commandContext -> onCommand(commandContext.getSource(), Collections.singletonList(commandContext.getSource().getPlayer()))
 						)
@@ -40,11 +41,11 @@ public class HealCommand {
 			player.getHungerManager().setFoodLevel(20);
 
 			if (!player.equals(commandSource.getPlayer())) {
-				player.sendChatMessage(new StringTextComponent("You have been healed!").applyFormat(TextFormat.GOLD), ChatMessageType.CHAT);
+				player.sendChatMessage(new AutoFormatTextComponent("You have been healed!", TextFormat.GOLD), ChatMessageType.CHAT);
 			}
 		}
 
-		commandSource.sendFeedback(new StringTextComponent("Healed ").append(TextFormatter.join(players, PlayerEntity::getDisplayName).applyFormat(TextFormat.DARK_RED).append("!")), false);
+		commandSource.sendFeedback(new AutoAppendTextComponent("Healed ", new AutoFormatTextComponent(TextFormatter.join(players, PlayerEntity::getDisplayName), TextFormat.DARK_RED), "!"), false);
 
 		return 1;
 	}

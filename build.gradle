@@ -6,18 +6,26 @@ sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 archivesBaseName = "stuff"
-version = "0.2.0"
+version = "0.2.1"
 
 minecraft {
 }
 
+repositories {
+	maven {
+		url "https://maven.jamieswhiteshirt.com/libs-release/"
+	}
+}
+
 dependencies {
 	minecraft "com.mojang:minecraft:19w06a"
-	mappings "net.fabricmc:yarn:19w06a.3"
-	modCompile "net.fabricmc:fabric-loader:0.3.5.106"
+	mappings "net.fabricmc:yarn:19w06a.10"
+	modCompile "net.fabricmc:fabric-loader:0.3.6.107"
 
-	// Fabric API. This is technically optional, but you probably want it anyway.
-	modCompile "net.fabricmc:fabric:0.2.0.90"
+	modCompile "net.fabricmc:fabric:0.2.0.92"
+
+	modCompile "com.jamieswhiteshirt:developer-mode:1.0.0"
+
 }
 
 // Loom will automatically attach sourcesJar to a RemapSourcesJar task and to the "build" task

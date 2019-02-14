@@ -12,6 +12,8 @@ import net.minecraft.text.StringTextComponent;
 import net.minecraft.text.TextComponent;
 import net.minecraft.text.TextFormat;
 import net.minecraft.world.dimension.DimensionType;
+import site.geni.stuff.util.AutoAppendTextComponent;
+import site.geni.stuff.util.AutoFormatTextComponent;
 
 public class TpDimCommand {
 	public static void register() {
@@ -19,33 +21,32 @@ public class TpDimCommand {
 		ServerStartCallback.EVENT.register(
 				server -> server.getCommandManager().getDispatcher().register(
 						ServerCommandManager.literal("tpdim").requires(
-								source -> source.hasPermissionLevel(1)
+								source -> source.hasPermissionLevel(4)
 						).then(
 								ServerCommandManager.argument(
 										"dimension", DimensionArgumentType.create()
 								).executes(
-										context -> onCommand(context)
+										context -> onCommand(context, DimensionArgumentType.getDimensionArgument(context, "dimension"))
 								)
 						)
 				)
 		);
 	}
 
-	private static int onCommand(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
+	private static int onCommand(CommandContext<ServerCommandSource> context, DimensionType dimensionType) throws CommandSyntaxException {
 		final ServerPlayerEntity player = context.getSource().getPlayer();
-		final DimensionType dimensionType = DimensionArgumentType.getDimensionArgument(context, "dimension");
 
 		if (dimensionType != null && dimensionType != player.dimension) {
-			final TextComponent dimension = new StringTextComponent(dimensionType.toString()).applyFormat(TextFormat.DARK_RED);
+			final TextComponent dimension = new AutoFormatTextComponent(dimensionType.toString(), TextFormat.DARK_RED);
 
-			final TextComponent tpMessage = new StringTextComponent("Teleporting to ").append(dimension).append("...");
+			final TextComponent tpMessage = new AutoAppendTextComponent(TextFormat.GOLD, "Teleporting to ", dimension, "...");
 			context.getSource().sendFeedback(tpMessage, false);
 
 			player.setInPortal(player.getPos());
 			player.changeDimension(dimensionType);
 
 			return 1;
-		} else if (dimensionType == player.dimension) {
+		} else if (dimensionType == player.dimension && dimensionType != null) {
 			throw new CommandException(new StringTextComponent(String.format("You are already in %s!", dimensionType.toString())));
 		} else
 			throw new CommandException(new StringTextComponent("Unexpected error."));
