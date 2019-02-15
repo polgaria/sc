@@ -2,7 +2,7 @@
   "id": "stuff",
   "name": "stuff",
   "description": "commands for dedicated servers",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "side": "universal",
   "initializers": [
     "site.geni.stuff.StuffMod"
@@ -16,8 +16,8 @@
   ],
   "links": {
     "homepage": "https://polgarian.life",
-    "issues": "https://github.com/geniiii/polgarian.life/issues",
-    "sources": "https://github.com/geniiii/polgarian.life"
+    "issues": "https://github.com/polgaria/stuff/issues",
+    "sources": "https://github.com/polgaria/stuff"
   },
   "requires": {
     "fabric": "*"
