@@ -22,10 +22,10 @@ public class SeedCommand {
 	private static int onCommand(CommandContext<ServerCommandSource> commandContext) {
 		final long seed = commandContext.getSource().getWorld().getSeed();
 
-		final TextComponent textComponent_1 = TextFormatter.bracketed((new StringTextComponent(String.valueOf(seed))).modifyStyle(style ->
+		final TextComponent seedTextComponent = TextFormatter.bracketed((new StringTextComponent(String.valueOf(seed))).modifyStyle(style ->
 				style.setColor(TextFormat.GREEN).setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, String.valueOf(seed))).setInsertion(String.valueOf(seed))
 		));
-		commandContext.getSource().sendFeedback(new TranslatableTextComponent("commands.seed.success", textComponent_1).applyFormat(TextFormat.GOLD), false);
+		commandContext.getSource().sendFeedback(new TranslatableTextComponent("commands.seed.success", seedTextComponent).applyFormat(TextFormat.GOLD), false);
 
 		return (int) seed;
 	}

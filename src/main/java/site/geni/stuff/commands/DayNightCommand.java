@@ -8,11 +8,12 @@ import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.TextComponent;
 import net.minecraft.text.TextFormat;
+import site.geni.stuff.util.AutoAppendTextComponent;
 import site.geni.stuff.util.AutoFormatTextComponent;
 
 public class DayNightCommand {
-	private final static TextComponent DAY_MESSAGE = new AutoFormatTextComponent("Time set to day. (0)", TextFormat.GOLD);
-	private final static TextComponent NIGHT_MESSAGE = new AutoFormatTextComponent("Time set to night. (13000)", TextFormat.GOLD);
+	private final static TextComponent DAY_MESSAGE = new AutoAppendTextComponent(TextFormat.GOLD, "Time set to day. (", new AutoFormatTextComponent("0", TextFormat.GREEN), ")");
+	private final static TextComponent NIGHT_MESSAGE = new AutoAppendTextComponent(TextFormat.GOLD, "Time set to night. (", new AutoFormatTextComponent("13000", TextFormat.GREEN), ")");
 
 
 	public static void register() {

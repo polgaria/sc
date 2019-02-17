@@ -7,7 +7,7 @@ import org.spongepowered.asm.mixin.injection.ModifyConstant;
 
 @SuppressWarnings("unused")
 @Mixin(TimeCommand.class)
-public class TimeCommandVanillaMixin {
+public abstract class TimeCommandVanillaMixin {
 	@ModifyConstant(method = "register", constant = @Constant(stringValue = "time", ordinal = 0))
 	private static String comName(String original) {
 		return "v" + original;

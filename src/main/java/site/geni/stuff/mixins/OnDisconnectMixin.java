@@ -20,7 +20,7 @@ import java.util.List;
 @SuppressWarnings("unused")
 @Environment(EnvType.SERVER)
 @Mixin(ServerPlayNetworkHandler.class)
-public class OnDisconnectMixin {
+public abstract class OnDisconnectMixin {
 	@Shadow
 	public ServerPlayerEntity player;
 

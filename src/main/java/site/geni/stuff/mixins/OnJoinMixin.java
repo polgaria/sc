@@ -19,7 +19,7 @@ import site.geni.stuff.util.AutoFormatTextComponent;
 @SuppressWarnings("unused")
 @Environment(EnvType.SERVER)
 @Mixin(PlayerManager.class)
-public class OnJoinMixin {
+public abstract class OnJoinMixin {
 	@Inject(at = @At("RETURN"), method = "onPlayerConnect")
 	private void onPlayerConnect(ClientConnection connection, ServerPlayerEntity entity, CallbackInfo info) {
 		final ServerPlayNetworkHandler playNetworkHandler = new ServerPlayNetworkHandler(entity.server, connection, entity);

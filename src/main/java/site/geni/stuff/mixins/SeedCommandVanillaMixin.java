@@ -7,7 +7,7 @@ import org.spongepowered.asm.mixin.injection.ModifyConstant;
 
 @SuppressWarnings("unused")
 @Mixin(SeedCommand.class)
-public class SeedCommandVanillaMixin {
+public abstract class SeedCommandVanillaMixin {
 	@ModifyConstant(method = "register", constant = @Constant(stringValue = "seed"))
 	private static String comName(String original) {
 		return "v" + original;
