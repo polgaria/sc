@@ -24,7 +24,7 @@ public abstract class OnDisconnectMixin {
 	@Shadow
 	public ServerPlayerEntity player;
 
-	@Inject(at = @At("RETURN"), method = "onConnectionLost")
+	@Inject(at = @At("RETURN"), method = "onDisconnected")
 	private void onConnectionLost(CallbackInfo info) {
 		if (TpaCommand.getRequests().containsValue(player.getUuid())) {
 			ServerPlayerEntity destPlayer = null;
