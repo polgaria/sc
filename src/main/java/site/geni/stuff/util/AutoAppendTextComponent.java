@@ -13,7 +13,6 @@ public class AutoAppendTextComponent extends AbstractTextComponent {
 		this.appendObjects(objects);
 
 		this.applyFormat(textFormat);
-		System.out.println(this.getString());
 	}
 
 	private void appendObjects(Object... objects) {
@@ -48,6 +47,10 @@ public class AutoAppendTextComponent extends AbstractTextComponent {
 			AutoAppendTextComponent autoAppendTextComponent = (AutoAppendTextComponent) object;
 			return this.getChildren().equals(autoAppendTextComponent.getChildren()) && super.equals(object);
 		}
+	}
+
+	public String toString() {
+		return "TextComponent{siblings=" + this.children + ", style=" + this.getStyle() + '}';
 	}
 
 	public AutoAppendTextComponent copyShallow() {

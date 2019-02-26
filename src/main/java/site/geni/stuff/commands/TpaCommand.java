@@ -116,17 +116,10 @@ public class TpaCommand {
 	}
 
 	private static int onTpAcceptCommand(CommandContext<ServerCommandSource> commandContext, ServerPlayerEntity player) {
-		ServerPlayerEntity originPlayer = null;
-		final List<ServerPlayerEntity> playerList = player.server.getPlayerManager().getPlayerList();
-
 		/* check if the destination player is in the requests */
 		if (requests.containsKey(player.getUuid())) {
-			/* search through all players on the server until the origin player is found */
-			for (ServerPlayerEntity search : playerList) {
-				if (search.getUuid().equals(requests.get(player.getUuid()))) {
-					originPlayer = search;
-				}
-			}
+			/* try to get destination player */
+			final ServerPlayerEntity originPlayer = player.server.getPlayerManager().getPlayer(requests.get(player.getUuid()));
 
 			/* throw an exception if the origin player is no longer in the server */
 			if (originPlayer == null) {

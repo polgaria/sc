@@ -18,7 +18,7 @@ public class StuffMod implements ModInitializer {
 		TpDimCommand.register();
 		WeatherCommand.register();
 
-		LogManager.getLogger().info("[stuff] Commands registered.");
+		LogManager.getLogger("stuff").info("[stuff] Commands registered.");
 	}
 
 	@Override

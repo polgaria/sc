@@ -27,15 +27,8 @@ public abstract class OnDisconnectMixin {
 	@Inject(at = @At("RETURN"), method = "onDisconnected")
 	private void onConnectionLost(CallbackInfo info) {
 		if (TpaCommand.getRequests().containsValue(player.getUuid())) {
-			ServerPlayerEntity destPlayer = null;
-			final List<ServerPlayerEntity> playerList = player.server.getPlayerManager().getPlayerList();
-
-			/* search through all players on the server until the destination player is found */
-			for (ServerPlayerEntity search : playerList) {
-				if (search.getUuid().equals(TpaCommand.getRequests().inverse().get(player.getUuid()))) {
-					destPlayer = search;
-				}
-			}
+			/* try to get destination player */
+			final ServerPlayerEntity destPlayer = player.server.getPlayerManager().getPlayer(TpaCommand.getRequests().inverse().get(player.getUuid()));
 
 			if (destPlayer != null) {
 				/* remove expired TPA request from requests */
