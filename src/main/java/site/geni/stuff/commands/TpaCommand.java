@@ -14,7 +14,6 @@ import net.minecraft.text.TextFormat;
 import site.geni.stuff.util.AutoAppendTextComponent;
 import site.geni.stuff.util.AutoFormatTextComponent;
 
-import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -151,17 +150,8 @@ public class TpaCommand {
 	}
 
 	private static int onTpDenyCommand(CommandContext<ServerCommandSource> commandContext, ServerPlayerEntity player) {
-		ServerPlayerEntity originPlayer = null;
-		final List<ServerPlayerEntity> playerList = player.server.getPlayerManager().getPlayerList();
-
-		/* check if the destination player is in the requests */
 		if (requests.containsKey(player.getUuid())) {
-			/* search for origin player in player list */
-			for (ServerPlayerEntity search : playerList) {
-				if (search.getUuid().equals(requests.get(player.getUuid()))) {
-					originPlayer = search;
-				}
-			}
+			final ServerPlayerEntity originPlayer = player.server.getPlayerManager().getPlayer(requests.get(player.getUuid()));
 
 			/* throw an exception if the origin player is no longer in the server */
 			if (originPlayer == null) {
@@ -187,6 +177,7 @@ public class TpaCommand {
 		} else {
 			throw new CommandException(new StringTextComponent("You have no requests to deny!"));
 		}
+
 	}
 
 	public static HashBiMap<UUID, UUID> getRequests() {
